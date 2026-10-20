@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carta Secreta 2</title>
+  <style>
+ body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  
+  /* 🌌 CIELO NATURAL CONTINUO: Azul noche profundo arriba que se funde en forma de U con el rosa y violeta abajo */
+  background: radial-gradient(
+    ellipse 75% 60% at 50% 100%, 
+    #fbc3d3 0%,   /* Rosa pastel abajo en el centro */
+    #8e43ad 45%,  /* Violeta difuminado intermedio */
+    #131833 80%,  /* Azul noche oscuro y profundo */
+    #0a0d22 100%  /* Azul místico para las esquinas superiores */
+  );
+  background-size: 100% 100%;
+  height: 100vh;
+  position: relative; 
+}
+
+/* 🌅 ELIMINADO EL SUELO RÍGIDO: El degradado elíptico del body ya hace el efecto curvo y suave por sí solo */
+.suelo-curvo {
+  display: none;
+}
+    /* Animación suave para que los tonos rosa se mezclen con dulzura */
+    @keyframes fondoRosaCute {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+
+    }
+     h2 {
+      font-family: 'Fredoka', 'Arial Round', 'CoCoBubble', 'Comic Sans MS', sans-serif;
+      font-size: 19px;        /* Reducido proporcionalmente de 28px */
+      font-weight: bold;
+      color: #fff1f2; 
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(255, 182, 193, 0.6), 2px 2px 0px rgba(0, 0, 0, 0.5);
+      margin-top: 8px;
+      margin-bottom: 5px;
+    }
+    /* 🔐 ACHICAR EL EMOJI DEL CANDADO PARA QUE COMBINE CON EL TEXTO 🔐 */
+    h2 span {
+      font-size: 19px !important; /* Baja de 28px a 19px para que mida lo mismo que las letras */
+      vertical-align: middle;
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* ✨ ESTRELLAS FUGACES Y BRILLOS METÁLICOS REALES ✨ */
+       .star-sparkle {
+      position: absolute;
+      background: #ffffff;
+      
+      /* Corta la caja en un destello de 4 puntas perfecto */
+      clip-path: polygon(50% 0%, 63% 38%, 100% 50%, 63% 62%, 50% 100%, 37% 62%, 0% 50%, 37% 38%);
+      
+      /* Brillo de neón rosa alrededor */
+      box-shadow: 
+        0 0 8px #ffffff, 
+        0 0 16px #ff85a1;
+      animation: fallStar linear forwards;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* Tu estela de velocidad (Esta ya la tienes, déjala justo abajo) */
+    .star-sparkle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255, 133, 161, 1) 0%, rgba(255, 222, 228, 0.4) 40%, transparent 100%);
+      transform: translate(-100%, -50%) rotate(135deg);
+      transform-origin: right center;
+    }
+
+    /* 🌟 REGRESAMOS LA ANIMACIÓN ORIGINAL HACIA LA DERECHA 🌟 */
+    @keyframes fallStar {
+      0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+        transform: translate(5vw, 5vh) scale(1);
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        /* Desplazamiento original hacia abajo a la derecha */
+        transform: translate(85vw, 85vh) scale(0.2);
+        opacity: 0;
+      }
+    }
+    /* 🐾 BARRA CUTE DE ANIMALITOS ABAJO 🐾 */
+   .barra-animalitos {
+      position: fixed;
+      bottom: 20px;            /* Distancia limpia del borde como en tu captura */
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around; 
+      align-items: flex-end;
+      pointer-events: none; 
+      z-index: 3; 
+      filter: drop-shadow(2px 4px 6px rgba(122, 50, 64, 0.15)); 
+      user-select: none;
+    }
+     /* 🐾 REDUCCIÓN FÍSICA DIRECTA DE LOS STICKERS AL 67% 🐾 */
+    .barra-animalitos img {
+      height: auto !important;
+    }
+    .barra-animalitos img[src="disfras.png"] { width: 114px !important; margin-bottom: 47px !important; }
+    .barra-animalitos img[src="caja.png"]    { width: 180px !important; }
+    .barra-animalitos img[src="tronco.png"]  { width: 120px !important; margin-bottom: -20px !important; }
+    .barra-animalitos img[src="zoyco.png"]   { width: 120px !important; }
+    .barra-animalitos img[src="ajolote.png"] { width: 80px !important; margin-bottom: -20px !important; }
+    .barra-animalitos img[src="mermel.png"]  { width: 134px !important; margin-bottom: -20px !important; }
+    .barra-animalitos img[src="booki.png"]   { width: 120px !important; }
+    .barra-animalitos img[src="coyzoco.png"] { width: 180px !important; margin-bottom: 33px !important; }
+    .barra-animalitos img[src="cora.png"]    { width: 73px !important; }
+
+    /* Animación sutil de respiración/balanceo para que tengan vida */
+    .animalito-cute {
+      animation: balanceoCute 3s ease-in-out infinite alternate;
+    }
+
+    /* Hace que los de las esquinas se balanceen a tiempos diferentes */
+    .animalito-cute:nth-child(even) {
+      animation-delay: 1.5s;
+    }
+
+    @keyframes balanceoCute {
+      0% { transform: translateY(0) rotate(-3deg) scale(1); }
+      100% { transform: translateY(-4px) rotate(3deg) scale(1.05); }
+    }
+    .screen {
+      display: none;
+      justify-content: flex-end;              /* Mantiene la carta amarrada abajo en su lugar perfecto */
+      align-items: center;
+      height: 110vh;                          /* ¡ESTIRA EL CIELO AZUL UN 10% MÁS HACIA ARRIBA! */
+      text-align: center;
+      flex-direction: column;
+      position: relative;
+      z-index: 2;
+      box-sizing: border-box;
+      padding-bottom: 120px;                  /* Mantiene el colchón exacto para no pisar los animalitos */
+    }
+    .active {
+      display: flex;
+    }
+    .password-screen {
+      flex-direction: column;
+      justify-content: flex-start !important; /* 🌟 Sube la imagen y los textos al tope superior */
+      padding-top: 4vh;                        /* 📏 Añade un margen suave arriba para que no pegue al borde */
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 40px); /* Reducido de 44px a 40px para encoger el teclado */
+      gap: 7px;                               /* Separación un poquito más compacta */
+      margin-top: 15px;                       /* Bajado de 25px a 15px para que suba */
+      justify-content: center;
+    }
+    .key {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 218, 228, 0.4) 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 7px;                     /* Bordes un poquito más finos */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      font-size: 15px;                        /* Números un poquito más pequeños y estilizados */
+      font-weight: 700; 
+      color: #611827; 
+      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.6); 
+      padding: 0;                             /* Limpiamos rellenos que estiren el botón */
+      width: 40px;
+      height: 40px;                           /* Cuadrados perfectos de 40px */
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 
+        inset 0 1px 1px rgba(255, 255, 255, 0.9),
+        inset 0 -2px 4px rgba(221, 140, 155, 0.2),
+        4px 4px 12px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+      /* Destello de brillo metálico cruzado usando un pseudoelemento */
+    .key::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg, 
+        transparent 45%, 
+        rgba(255, 255, 255, 0.6) 50%, 
+        transparent 55%
+      );
+      transform: rotate(45deg);
+      transition: transform 0.5s ease;
+      pointer-events: none;
+    }
+    .key:hover {
+       /* Al pasar el mouse, el fondo se aclara e intensifica el brillo */
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 230, 238, 0.6) 100%);
+      transform: translateY(-3px);
+      
+      /* Aumenta la sombra para dar efecto de elevación */
+      box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 1),
+        4px 8px 16px rgba(221, 140, 155, 0.4);
+    }
+
+    /* Hace que el destello brille cruzando la tecla al pasar el mouse */
+    .key:hover::before {
+      transform: translate(50%, 50%) rotate(45deg);
+    }
+
+    /* Efecto visual de "pulsado" */
+    .key:active {
+      transform: translateY(-1px);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        2px 4px 8px rgba(221, 140, 155, 0.3);
+    }
+      .input-display {
+      font-size: 17px;        /* El punto medio perfecto entre 14px y 22px */
+      margin-top: 15px;       
+      margin-bottom: 5px;     
+      letter-spacing: 6px;    
+      color: #fff1f2; 
+      text-shadow: 0 0 10px rgba(255, 182, 193, 0.8); 
+    }
+   .notepad {
+      background-color: #f9f9f9;
+      background-image: radial-gradient(#08080817 1.5px, transparent 1.5px);
+      background-size: 25px 25px; 
+      border: 4px solid;
+      border-image: linear-gradient(to bottom, #1d264f 0%, #fbc3d3 100%) 1;
+      outline: 2px solid #a27cb8; 
+      outline-offset: -8px; 
+      /* Reducimos el espacio de abajo a 25px para recortar la hoja verticalmente */
+      padding: 25px 45px 25px 45px;           
+      border-radius: 20px;
+      width: 92%;
+      max-width: 580px;                       /* Mantenemos tu ancho perfecto intacto */
+      text-align: left;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 11px;                        /* ¡ACHICADA LIGERAMENTE! De 11.5px a 11px */
+      line-height: 1.45;                      /* ¡MÁS JUNTAS! Reducido de 1.6 a 1.45 para quitar la separación */
+      box-shadow: 
+        8px 8px 15px rgba(0, 0, 0, 0.2),
+        0 -10px 20px rgba(29, 38, 79, 0.6),  
+        0 10px 20px rgba(251, 195, 211, 0.7); 
+      position: relative;
+      box-sizing: border-box;
+    }
+    .notepad h3 {
+      font-size: 13px !important;             /* Escala del título de la fecha */
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    .notepad h4 {
+      font-size: 11px !important;             /* Escala de la dedicatoria para Miguel */
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .password-img {
+      width: 180px;           
+      height: auto;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 6px 6px 15px rgba(0,0,0,0.3);
+      margin-bottom: 5px;     /* Reducido a 5px para liberar espacio vertical en el centro */
+    }
+   .back-btn {
+      position: absolute;
+      right: 10px;                            /* Ajustado un poco más al borde */
+      top: 50%;    
+      transform: translateY(-50%); 
+      background: linear-gradient(135deg, #fbc3d3 0%, #ffffff 25%, #ff9ebb 50%, #ffffff 75%, #fbc3d3 100%);
+      background-size: 200% 200%;
+      border: 2px solid #000000;              /* Línea un poco más fina */
+      padding: 4px 10px;                      /* Más compacto */
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 10px;                        /* Letra del botón más pequeña */
+      font-weight: bold;
+      color: #000000; 
+      border-radius: 9px; 
+      cursor: pointer;
+      box-shadow: 3px 3px 0px #a27cb8; 
+      transition: all 0.2s ease-in-out;
+    }
+
+    /* 🕹️ EFECTO AL PASAR EL MOUSE: El metal brilla y se mueve */
+     .back-btn:hover {
+      background-position: 100% 100%; 
+      transform: translate(1px, calc(-50% + 1px)); 
+      box-shadow: 1px 1px 0px #1d264f; 
+    }
+    /* ✨ CONTROL DE LA IMAGEN DENTRO DE LA CARTA ✨ */
+    .notepad img {
+      width: 180px !important;                /* Reduce la foto de 270px a 180px para que calce idéntica */
+      height: auto !important;
+
+    }
+     .notepad p {
+      margin-top: 0px;        /* Quita el espacio exagerado de arriba */
+      margin-bottom: 8px;    /* Deja una separación muy sutil y fina abajo de cada párrafo */
+    }
+  </style>
+</head>
+<body>
+ <!-- REPRODUCTOR DE AUDIO EN EL SEGUNDO ARCHIVO -->
+  <audio id="musicaFondo" loop>
+    <source src="30Lost Girl (320K).mp3" type="audio/mpeg">
+  </audio>
+
+<div class="hearts"></div>
+
+<!-- 🐰 AQUÍ COMIENZAN TUS DIBUJOS CUTE ABAJO 🐱 -->
+<div class="barra-animalitos">
+
+  <!-- ⬅️ NUEVA IMAGEN EN EL COSTADO IZQUIERDO -->
+  <img class="animalito-cute" src="disfras.png" alt="Nuevo Izquierda" style="width: 170px; height: auto; margin-bottom: 70px;">
+ 
+  <!-- ⬅️ NUEVA IMAGEN EN EL COSTADO IZQUIERDO -->
+  <img class="animalito-cute" src="caja.png" alt="Nuevo Izquierda" style="width: 270px; height: auto;">
+
+  <!-- Gatito blanco y tierno durmiendo o saludando -->
+  <img class="animalito-cute" src="tronco.png" alt="Gatito Cute" style="width: 180px; height: auto; margin-bottom: -30px;">
+  
+  <!-- Estrellitas destellos dorados estilo dibujo tierno -->
+  <img class="animalito-cute" src="zoyco.png" alt="Brillitos" style="width: 180px; height: auto;">
+  
+  <!-- Conejito blanco tierno saltando feliz -->
+  <img class="animalito-cute" src="ajolote.png" alt="Conejito Cute" style="width: 120px; height: auto; margin-bottom: -30px;">
+  
+  <!-- Flor de cerezo estilo sticker aesthetic acuarela -->
+  <img class="animalito-cute" src="mermel.png" alt="Flor Sakura" style="width: 200px; height: auto; margin-bottom: -30px;">
+  
+  <!-- Conejito tierno asomándose en una taza de té -->
+  <img class="animalito-cute" src="booki.png" alt="Conejito Taza" style="width: 180px; height: auto;">
+
+ <!-- ➡️ NUEVA IMAGEN EN EL COSTADO DERECHO -->
+  <img class="animalito-cute" src="coyzoco.png" alt="Nuevo Derecha" style="width: 270px; height: auto; margin-bottom: 50px;">
+
+<!-- ➡️ NUEVA IMAGEN EN EL COSTADO DERECHO -->
+  <img class="animalito-cute" src="cora.png" alt="Nuevo Derecha" style="width: 110px; height: auto; margin-bottom: 0px;">
+
+</div>
+
+<div id="passwordScreen" class="screen password-screen active">
+  <img src="kriselle (3).png" 
+       alt="Kriselle" 
+       class="password-img">
+  <h2><span style="font-size: 28px; filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0)); vertical-align: middle;">🔐</span> Ingresa la contraseña</h2>
+  <div class="input-display" id="inputDisplay">••••••••</div>
+  
+  <div class="keypad">
+    <button class="key" onclick="enterDigit('1')">1</button>
+    <button class="key" onclick="enterDigit('2')">2</button>
+    <button class="key" onclick="enterDigit('3')">3</button>
+    <button class="key" onclick="enterDigit('4')">4</button>
+    <button class="key" onclick="enterDigit('5')">5</button>
+    <button class="key" onclick="enterDigit('6')">6</button>
+    <button class="key" onclick="enterDigit('7')">7</button>
+    <button class="key" onclick="enterDigit('8')">8</button>
+    <button class="key" onclick="enterDigit('9')">9</button>
+    <button class="key" onclick="checkPassword()">✔️</button>
+    <button class="key" onclick="enterDigit('0')">0</button>
+    <button class="key" onclick="deleteLast()">⌫</button>
+  </div>
+</div>
+
+<div id="notepadScreen" class="screen">
+ <div class="notepad" style="text-align: center;">
+    
+    <!-- 📦 CONTENEDOR CON ANCHO COMPLETO: Mantiene la foto al centro y le da espacio al botón a la derecha -->
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative; margin-bottom: 20px;">
+      
+      <!-- La imagen de Kriselle recupera su posición e independencia en el centro exacto -->
+      <img src="kriselle (2).png" 
+           alt="Imagen decorativa" 
+           style="width: 270px; height: auto; border: none; box-shadow: none; display: block; margin: 0 auto;">
+      
+      <!-- El botón viaja a la derecha gracias al CSS absoluto del Paso 1 -->
+      <button class="back-btn" onclick="goBack()">⇦⤾𐙚𓍢ִ໋🌷͙͙֒֒ Inicio</button>
+    </div>
+
+    <h3 style="text-align: left; margin-bottom: 0;">📅𐙚 ₊°✦, ˚❀ 19 de Agosto, 2026 𐙚₊˚⋆</h3>
+    <h4 style="text-align: left; margin-top: 0;">💌 Para Mi Querido Noviecito Miguel, el mas bello y lindo del mundo⋆ ˚｡ ⋆✉️˚｡ ⋆ </h4>
+    <p style="text-align: justify;">
+      Quiero que sepas lo feliz que soy por tenerte en mi vida. Desde que llegaste, todo cambió para mejor.
+      Me haces sentir amada, cuidada y acompañada, y siempre estás cuando te necesito. Llenaste de luz y alegría mis días, y cada momento contigo se siente especial. Me encanta oír tu voz, ver tu sonrisa y sentir que estás a mi lado, incluso aún estando lejos. Eres mi amor más grande, no puedo imaginar mi vida sin ti.</p>
+    <p style="text-align: justify;">
+      A tu lado aprendí lo que es el amar de verdad, ese que se demuestra con acciones, con palabras sinceras
+      y con esos pequeños detalles que por más pequeños que sean importan demasiado. Gracias por estar siempre conmigo, por darme tu
+      tiempo, tu cariño y tu comprensión.
+    </p>
+    <p style="text-align: justify;">
+      No sé cómo explicarlo, pero contigo mi corazón está en paz. Eres mi alegría diaria
+      y mi razón de tantas sonrisas. Mi amor felices dos meses juntos, y que vengan muchos más a tu lado. Gracias por ser tú, por ser mi compañero, mi todo y mi amor. Te amo con todo mi corazón y siempre lo haré.
+    </p>
+    <p style="text-align: justify;">
+      Te amo profundamente. ♡
+    </p>
+  </div>
+</div>
+
+<script>
+  function crearEstrellasFugaces() {
+    const container = document.querySelector('.hearts');
+    
+    setInterval(() => {
+      const star = document.createElement('div');
+      star.classList.add('star-sparkle');
+      
+      const baseSize = Math.random() * 6 + 12; 
+      star.style.width = baseSize + 'px'; 
+      star.style.height = baseSize + 'px';
+      
+      /* 🌟 TRUCO CLAVE: Nacimiento ampliado hacia la izquierda fuera de pantalla 🌟 */
+      star.style.top = (Math.random() * 60 - 30) + 'vh'; // Cubre más altura inicial
+      star.style.left = (Math.random() * 120 - 30) + 'vw'; // Nacen desde -30vw (izquierda oculta) hasta 90vw (derecha)
+      
+      star.style.animationDuration = (Math.random() * 1.5 + 1.2) + 's';
+
+      container.appendChild(star);
+      
+      setTimeout(() => { star.remove(); }, 2500);
+    }, 350); 
+  }
+  // Encendemos el motor de estrellas
+  crearEstrellasFugaces();
+
+  const correctPassword = '19082026';
+  let input = '';
+
+  function enterDigit(digit) {
+    // Activa la música en el segundo archivo al tocar el primer número
+    const musica = document.getElementById("musicaFondo");
+    if (musica) {
+      musica.play().catch(error => console.log("Autoplay bloqueado"));
+    }
+
+    if (input.length < 8) {
+      input += digit;
+      updateDisplay();
+    }
+  }
+
+  function deleteLast() {
+    input = input.slice(0, -1);
+    updateDisplay();
+  }
+
+  function updateDisplay() {
+    document.getElementById('inputDisplay').textContent = input.padEnd(8, '•');
+  }
+
+  function checkPassword() {
+    if (input.length === 8) {
+      if (input === correctPassword) {
+        document.getElementById('passwordScreen').classList.remove('active');
+        document.getElementById('notepadScreen').classList.add('active');
+      } else {
+        alert('Contraseña incorrecta, intenta de nuevo');
+        input = '';
+        updateDisplay();
+      }
+    } else {
+      alert('Debes ingresar los 8 dígitos.');
+    }
+  }
+
+  function goBack() {
+    document.getElementById('notepadScreen').classList.remove('active');
+    document.getElementById('passwordScreen').classList.add('active');
+    input = '';
+    updateDisplay();
+  }
+</script>
+</body>
+</html>
